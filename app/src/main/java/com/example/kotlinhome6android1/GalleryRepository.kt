@@ -66,19 +66,19 @@ class GalleryRepository {
         )
         galleryList.add(
             GalleryModel(
-                10,
+                11,
                 "https://images.wallpaperscraft.ru/image/single/matritsa_kod_tsifry_147523_300x168.jpg"
             )
         )
         galleryList.add(
             GalleryModel(
-                10,
+                12,
                 "https://images.wallpaperscraft.ru/image/single/kod_tekst_raznotsvetnyj_140555_300x168.jpg"
             )
         )
         galleryList.add(
             GalleryModel(
-                10,
+                13,
                 "https://images.wallpaperscraft.ru/image/single/fotoapparat_obektiv_remeshok_145518_300x168.jpg"
             )
         )

@@ -7,12 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemAnimator
 
 class GalleryFragment : Fragment(), OnItemClickListener {
 
+    private var photo: GalleryModel? = null
+    private  var id: TextView? = null
     private var ivPhoto: ImageView? = null
     private var rvGallery: RecyclerView? = null
     private lateinit var galleryList: ArrayList<GalleryModel>
@@ -28,6 +33,7 @@ class GalleryFragment : Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        id = view.findViewById(R.id.iv_id)
         rvGallery = view.findViewById(R.id.rv_gallery)
         galleryList = repository.getPhotos() as ArrayList<GalleryModel>
         ivPhoto = view.findViewById(R.id.iv_photo)
@@ -48,8 +54,10 @@ class GalleryFragment : Fragment(), OnItemClickListener {
 
     override fun onLongClick(photo: GalleryModel) {
         Toast.makeText(context, "sefgddggsfgsgsg", Toast.LENGTH_SHORT).show()
-        galleryAdapter.notifyItemRemoved(photo.id)
+        parentFragmentManager.beginTransaction().setCustomAnimations(
+            R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+            R.anim.enter_left_to_right, R.anim.exit_left_to_right
+        ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 
     }
-
 }

@@ -1,13 +1,19 @@
 package com.example.kotlinhome6android1
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
-import android.widget.AdapterView
+import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.withContext
+
 
 class GalleryAdapter(
     private val galleryList: ArrayList<GalleryModel>,
@@ -18,9 +24,11 @@ class GalleryAdapter(
 
     inner class PhotoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var ivPhoto: ImageView? = null
+        private var id: TextView? = null
 
         init {
             ivPhoto = view.findViewById(R.id.iv_photo)
+            id = view.findViewById(R.id.iv_id)
         }
 
         fun onBind(photo: GalleryModel) {
@@ -28,6 +36,7 @@ class GalleryAdapter(
                 Glide.with(it.context).load(photo.photoUrl).into(it)
             }
             itemView.tag = photo
+            id?.text = photo.id.toString()
         }
     }
 
@@ -38,11 +47,17 @@ class GalleryAdapter(
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
+
         holder.itemView.setOnClickListener(this)
         holder.itemView.setOnLongClickListener(this)
         holder.onBind(galleryList[position])
-        holder.itemView.isLongClickable = true
+        holder.itemView.setOnLongClickListener{
 
+            galleryList.removeAt(holder.adapterPosition)
+            notifyItemRemoved(holder.adapterPosition)
+            true
+
+        }
     }
 
     override fun getItemCount(): Int {
@@ -57,4 +72,5 @@ class GalleryAdapter(
         onItemClickListener.onLongClick(view?.tag as GalleryModel)
         return true
     }
+
 }
